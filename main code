@@ -1,0 +1,128 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
+
+#define SZ_FILE 255
+#define OPTIONLET 255
+#define MAX_SIZE 32000
+
+typedef struct{
+  int id;
+  char title[MAX_SIZE];
+  char url[MAX_SIZE];
+  int price;
+  float rating;
+  char subject[MAX_SIZE];
+  char level[MAX_SIZE];
+} csv;
+
+// Function prototypes
+void addCourse(char fileName[]);
+void removeCourse(char fileName[]);
+// void searchCourses()
+// void filterCourses();
+// void saveCSV(char fileName[]);
+
+
+int main(void) {
+  
+  char fileName[SZ_FILE] = {0};
+  char option[OPTIONLET] = "";
+  char *opt = option;
+  
+  printf("Enter File Name: ");
+  scanf("%s", fileName);
+  
+  FILE* fp = fopen(fileName, "r+");
+
+  if (fp == NULL) {
+      printf("Can't open file\n");
+  } else {
+
+    while(strcmp(option, "X") != 0){
+    
+      printf("Enter C to Create new Course\nEnter D to Delete Course\nEnter F to filter by type\nEnter S to searching\nEnter X to save result\nEnter: ");
+      scanf("%s", option);
+
+      switch(toupper(*opt)){
+        case 'C':
+          addCourse(fileName);
+        break;
+        case 'D':
+          removeCourse(fileName);
+        break;
+        case 'F':
+          // filterCourses();
+        break;
+        case 'S':
+          // searchCourses();
+        break;
+      }
+    }
+  }
+  // saveCSV();
+  // fclose(fp);
+  return 0;
+}
+
+// void searchCourses(){
+  
+// }
+
+void addCourse(char fileName[]) {
+  
+  csv courses;
+  
+  FILE *fp = fopen(fileName, "a");
+
+  printf("Enter course id: ");
+  scanf("%d", &courses.id);
+  printf("Enter course title: ");
+  scanf("%s", courses.title);
+  printf("Enter course URL: ");
+  scanf("%s", courses.url);
+  printf("Enter course price: ");
+  scanf("%d", &courses.price);
+  printf("Enter course level: ");
+  scanf("%s", courses.level);
+  printf("Enter course rating: ");
+  scanf("%f", &courses.rating);
+  printf("Enter course subject: ");
+  scanf("%s", courses.subject);
+
+  fprintf(fp, "%d,%s,%s,%d,%s,%f,%s", courses.id,courses.title,courses.url,courses.price,courses.level,courses.rating,courses.subject);
+  
+  fclose(fp);
+}
+
+// void removeCourse(char fileName[]) {
+  
+//   csv courses;
+//   int deleteID = 0;
+  
+//   printf("Enter ID or course you would like to remove: ");
+//   scanf("%d", &deleteID);
+//   FILE *fp = fopen(fileName, "r");
+  
+//   // FILE *temp = fopen("temp.txt", "w");
+  
+//   char line[256];
+
+//   while (fgets(line, sizeof(line), fp) != NULL) {
+//     // Check if the current line matches the line we want to remove
+//     if (strcmp(line, "%d", deleteID) == 0) {
+//       // Skip the line
+//       continue;
+// }
+
+  // void filterCourses(){
+    
+  // } 
+    
+  // void saveCSV(char fileName[]){  
+    //  if (fp == NULL)
+    // {
+    //     fp = fopen("udemy", "w");
+    // }
+  // }
